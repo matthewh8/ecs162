@@ -24,8 +24,10 @@ async function fetchApiKey(){
 
 async function fetchArticles(){
     const apiKey = await fetchApiKey();
+    // console.log(apiKey);
+    // console.log('hi');
     const query = 'davis';
-    const url = 'https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}\&api-key=${apiKey}';
+    const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&api-key=${apiKey}`;
     const response = await fetch(url);
     data = await response.json();
     console.log(data);
