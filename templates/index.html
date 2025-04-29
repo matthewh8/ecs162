@@ -4,48 +4,77 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>The New York Times</title>
-    <link rel="stylesheet" href="static/styles.css">
+    <link rel="stylesheet" href="css/styles.css">
+    <script src="js/main.js" defer></script>
 </head>
 <body>
-    <!-- <nav id="non_info_nav">
-        <div id="search">
-
-        </div>
-        <div id="language_select">
-
-        </div>
-        <div id="subscribe">
-
-        </div>
-        <div id="login">
-
-        </div>
-    </nav> -->
     <header>
-        <div id="date-container">
-            <div>
-                Today's Date
+        <!-- top bar -->
+        <div id="title-bar">
+            <div id="date-container">
+                <div id="current-date"></div>
+                <div>
+                    Today's Paper
+                </div>
+            </div>
+            <div id="logo">
+                <a href="index.html">
+                    <img src="img/Logo.png" alt="The New York Times Logo">
+                </a>
             </div>
             <div>
-                Today's Paper
+    
             </div>
         </div>
-        <div id="logo">
-            <a href="index.html">
-                <img src="assets/Logo.png" alt="The New York Times Logo">
-            </a>
-        </div>
-        <div>
+        <!-- second bar -->
+        <nav>
+            <!-- for spacing -->
+            <div class="side-tab">
 
-        </div>
+            </div>
+            <div class="tab">
+                U.S.
+            </div>
+            <div class="tab">
+                World
+            </div>
+            <div class="tab">
+                Business
+            </div>
+            <div class="tab">
+                Arts
+            </div>
+            <div class="tab">
+                Lifestyle
+            </div>
+            <div class="tab">
+                Opinion
+            </div>
+            <div class="tab">
+                Audio
+            </div>
+            <div class="tab">
+                Games
+            </div>
+            <div class="tab">
+                Cooking
+            </div>
+            <div class="tab">
+                Wirecutter
+            </div>
+            <div class="tab">
+                The Athletic
+            </div>
+            <!-- for spacing -->
+            <div class="side-tab">
+
+            </div>
+        </nav>
     </header>
-    <!-- <nav id="topics_nav">
-
-    </nav> -->
     <main class="container">
         <section class="left-column">
             <article>
-                <img src="assets/article1.png" class="img" alt="Youth Basketball">
+                <img src="img/article1.png" class="img" alt="Youth Basketball">
                 <h2>Excepteur sint occaecat cupidatat non proident</h2>
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>    
             </article>
@@ -61,16 +90,16 @@
                 <p>Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>                </p>
             </article>
             <article>
-                <img src="assets/article2.png" class="img" alt="Rayquaza">
+                <img src="img/article2.png" class="img" alt="Rayquaza">
                 <h2>Excepteur sint occaecat cupidatat non proident</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien. In id cursus mi pretium tellus duis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
             </article>
         </section>
         <section class="right-column">
             <article>
-                <img src="assets/article3.png" class="img" alt="Snorlax">
+                <img src="img/article3.png" class="img" alt="Snorlax">
                 <h2>Excepteur sint occaecat cupidatat non proident</h2>
-                <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos.</p>
+                <p>Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor. Pulvinar vivamus fringilla lacus nec metus bibendum egestas. Iaculis massa nisl malesuada lacinia integer nunc posuere. Ut hendrerit semper vel class aptent taciti sociosqu. Ad litora torquent per conubia nostra inceptos himenaeos. Lorem ipsum dolor sit amet consectetur adipiscing elit. Quisque faucibus ex sapien vitae pellentesque sem placerat. In id cursus mi pretium tellus duis convallis. Tempus leo eu aenean sed diam urna tempor.</p>
             </article>
             <article>
                 <h2>Excepteur sint occaecat cupidatat non proident</h2>
@@ -78,7 +107,6 @@
             </article>
         </section>
     </main>
-    
     <footer>
         <p>&copy; 2025 The New York Times</p>
     </footer>

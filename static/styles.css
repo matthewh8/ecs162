@@ -1,17 +1,24 @@
-/* Change fonts */
 body {
     font-family: Georgia, 'Times New Roman', Times, serif;
     margin: 0;
     padding: 10px 30px 0px 30px;
 }
 
-header {
+header{
+    border-bottom: 1px solid #bbb;
+    /* makes the header area stay even when scrolling */
+    position: sticky;
+    top: 0;
+    z-index: 10;
+    background-color: white;
+}
+
+#title-bar {
     display: flex;
     justify-content: space-between;
     align-items: center;
     padding: 20px 0px 10px 0px;
-    margin: 0px 0px 15px 0px;
-    border-bottom: 1px solid #bbb;
+    margin: 0px 0px 0px 0px;
 }
 
 #date-container {
@@ -30,8 +37,23 @@ header {
     height: auto;
 }
 
-header > div:last-child {
+/* makes the spacing even */
+#title-bar > div:last-child {
     flex: 1;
+}
+
+nav{
+    display: flex;
+    padding: 0px 0px 10px 0px;
+}
+
+.tab{
+    flex: 2;
+    text-align: center;
+}
+
+.side-tab{
+    flex: 3;
 }
 
 .container {
@@ -49,10 +71,11 @@ header > div:last-child {
     padding: 0px 30px 0px 30px;
 }
 
+/* 19.2 to match the h2 default margins*/
 .img{
     max-width: 100%;
     height: auto;
-    padding: 10px 0px 0px 0px;
+    padding: 19.2px 0px 0px 0px;
 }
 
 .left-column{
@@ -60,11 +83,13 @@ header > div:last-child {
     flex-direction: column;
     flex-wrap: wrap;
     flex: 2;
+    border-right: 1px solid #bbb;
+    padding: 0px 30px 0px 0px;
 }
 
+/* 14px so that the 16px from p matches the 30px */
 .left-column > article{
-    border-right: 1px solid #bbb;
-    padding: 0px 30px 20px 0px;
+    padding: 0px 0px 14px 0px;
 }
 
 .right-column{
@@ -72,22 +97,27 @@ header > div:last-child {
     flex-direction: column;
     flex-wrap: wrap;
     flex: 2;
+    border-left: 1px solid #bbb;
+    padding: 0px 0px 0px 30px;
 }
 
 .right-column > article{
-    border-left: 1px solid #bbb;
-    padding: 0px 0px 20px 30px;
+    padding: 0px 0px 14px 0px;
+    margin: 0px 0px 0px 0px;
 }
 
 article{
     border-bottom: 1px solid #bbb;
+    min-height: 300px;
 }
 
+/* for tablets */
 @media screen and (max-width: 1024px) {
     .container {
         flex-direction: row;
     }
     
+    /* makes the main column take priority on the left handside */
     .main-column {
         flex: 2;
         order: 1;
@@ -99,46 +129,96 @@ article{
     .right-column {
         flex: 1;
         order: 2;
+        border-left: 1px solid #bbb;
         padding: 0px 0px 0px 30px;
     }
     
     .left-column {
         flex: 0 0 100%;
         order: 3;
-        padding: 30px 0px 0px 0px;
+        border-right: none;
         border-top: 1px solid #bbb;
+        padding: 30px 0px 0px 0px;
         margin-top: 30px;
     }
-}
-
-@media screen and (max-width: 767px) {
-    .container {
-        flex-direction: column;
+    
+    nav {
+        display: none;
     }
     
-    .main-column,
-    .left-column,
-    .right-column {
-        flex: 1 0 100%;
-        border: none;
-        padding: 0;
-        margin: 0 0 30px 0;
-    }
-    
-    article {
-        margin-bottom: 30px;
-    }
-    
-    body {
-        padding: 10px 15px 0px 15px;
-    }
-    
-    header {
+    #title-bar {
         flex-direction: column;
         text-align: center;
     }
     
     #date-container {
-        margin-bottom: 15px;
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    
+    #title-bar > div:last-child {
+        margin-top: 10px;
+        text-align: center;
+    }
+}
+
+/* mobile display */
+@media screen and (max-width: 767px) {
+    .container {
+        flex-direction: column;
+    }
+    
+    /* all uniform */
+    .main-column,
+    .left-column,
+    .right-column {
+        flex: 1 0 100%;
+        padding: 0px 0px 20px 0px;
+        margin: 0;
+        border: none;
+        border-bottom: 1px solid #bbb;
+    }
+    
+    article {
+        min-height: 300px;
+        border-bottom: 1px solid #bbb;
+    }
+    
+    .left-column > article,
+    .right-column > article {
+        padding: 0px 0px 14px 0px;
+    }
+    
+    #title-bar {
+        flex-direction: column;
+        text-align: center;
+    }
+    
+    #date-container {
+        margin-bottom: 10px;
+        text-align: center;
+    }
+    
+    #logo {
+        margin: 10px 0;
+    }
+    
+    #title-bar > div:last-child {
+        margin-top: 10px;
+        text-align: center;
+    }
+    
+    nav {
+        display: none;
+    }
+    
+    .img {
+        max-width: 100%;
+        height: auto;
+        padding: 19.2px 0px 0px 0px;
+    }
+    
+    body {
+        padding: 10px 15px 0px 15px;
     }
 }
