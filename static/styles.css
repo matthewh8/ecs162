@@ -72,7 +72,7 @@ nav{
 }
 
 /* 19.2 to match the h2 default margins*/
-.img{
+.article-img{
     max-width: 100%;
     height: auto;
     padding: 19.2px 0px 0px 0px;
@@ -212,7 +212,7 @@ article{
         display: none;
     }
     
-    .img {
+    .article-img {
         max-width: 100%;
         height: auto;
         padding: 19.2px 0px 0px 0px;

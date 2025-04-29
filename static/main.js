@@ -49,6 +49,10 @@ function displayArticles(articles){
     let abstract = document.createElement('p');
     abstract.textContent = article.abstract;
     articleWrapper.appendChild(abstract);
+    let img = document.createElement('img');
+    img.src = article.multimedia.default.url;
+    img.classList.add('article-img');
+    articleWrapper.appendChild(img);
     columns[i%3].appendChild(articleWrapper); //append wrapper containing everything to parent element column
   }
 }
