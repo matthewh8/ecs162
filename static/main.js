@@ -24,14 +24,26 @@ async function fetchApiKey(){
 
 async function fetchArticles(){
     const apiKey = await fetchApiKey();
-    console.log(apiKey);
-    console.log('hi');
-    const query = 'davis';
-    const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&api-key=${apiKey}`;
-    const response = await fetch(url);
-    data = await response.json();
-    console.log(data);
-    articles = data.response.docs;
+    let page = 0;
+    const query = 'sacramento';
+    let articles = [];
+    while(articles.length < 6){
+      const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&page=${page}&api-key=${apiKey}`;
+      console.log(url);
+      const response = await fetch(url);
+      data = await response.json();
+      const returned = data.response.docs;
+      for(const doc of returned){
+        const keywords = doc.keywords;
+        for(const keyword of keywords){
+          if(keyword.name.includes('Location') && keyword.value.includes('Sacramento')){
+            articles.push(doc);
+            break;
+          }
+        }
+      }
+      page++;
+    }
     displayArticles(articles.slice(0, 6));
 }
 
