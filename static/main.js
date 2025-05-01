@@ -27,7 +27,7 @@ async function fetchArticles(){
     let page = 0;
     const query = 'sacramento';
     let articles = [];
-    while(articles.length < 6){
+    while(articles.length < 48){
       const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&page=${page}&api-key=${apiKey}`;
       console.log(url);
       const response = await fetch(url);
@@ -44,7 +44,7 @@ async function fetchArticles(){
       }
       page++;
     }
-    displayArticles(articles.slice(0, 6));
+    displayArticles(articles.slice(0, 48));
 }
 
 function displayArticles(articles){
@@ -52,7 +52,7 @@ function displayArticles(articles){
   const mainColumn = document.querySelector('.main-column');
   const rightColumn = document.querySelector('.right-column');
   const columns = [leftColumn, mainColumn, rightColumn];
-  for(let i = 0; i < 6; i++){
+  for(let i = 0; i < 48; i++){
     let article = articles[i];
     let articleWrapper = document.createElement('article'); //create article element wrapping headline/abstract
     let headline = document.createElement('h2');
@@ -68,6 +68,5 @@ function displayArticles(articles){
     columns[i%3].appendChild(articleWrapper); //append wrapper containing everything to parent element column
   }
 }
-
 
 window.onload = fetchArticles();
