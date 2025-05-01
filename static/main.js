@@ -1,15 +1,17 @@
-const today = new Date();
+function getFormattedDate() {
+  const today = new Date();
+  
+  const options = { 
+    weekday: 'long',
+    year: 'numeric',
+    month: 'long',
+    day: 'numeric'
+  };
+  
+  return today.toLocaleDateString('en-US', options);
+}
 
-const options = { 
-  weekday: 'long',
-  year: 'numeric',
-  month: 'long',
-  day: 'numeric'
-};
-
-const dateString = today.toLocaleDateString('en-US', options);
-
-document.getElementById('current-date').textContent = dateString;
+document.getElementById('current-date').textContent = getFormattedDate();
 
 async function fetchApiKey(){
     try{
