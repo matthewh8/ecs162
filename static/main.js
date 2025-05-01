@@ -1,4 +1,4 @@
-function getFormattedDate() {
+export function getFormattedDate() {
   const today = new Date();
   
   const options = { 
@@ -11,7 +11,7 @@ function getFormattedDate() {
   return today.toLocaleDateString('en-US', options);
 }
 
-async function fetchApiKey(){
+export async function fetchApiKey(){
     try{
     // still needs to be converted to json even though it was transferred initially as json
     const response = await fetch('/api/key'); 
@@ -22,7 +22,7 @@ async function fetchApiKey(){
     }
 }
 
-async function fetchArticles(){
+export async function fetchArticles(){
     const apiKey = await fetchApiKey();
     let page = 0;
     const query = 'sacramento';
@@ -31,7 +31,7 @@ async function fetchArticles(){
       const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&page=${page}&api-key=${apiKey}`;
       console.log(url);
       const response = await fetch(url);
-      data = await response.json();
+      const data = await response.json();
       const returned = data.response.docs;
       for(const doc of returned){
         const keywords = doc.keywords;
@@ -47,7 +47,7 @@ async function fetchArticles(){
     displayArticles(articles.slice(0, 42));
 }
 
-function displayArticles(articles){
+export function displayArticles(articles){
   const leftColumn = document.querySelector('.left-column');
   const mainColumn = document.querySelector('.main-column');
   const rightColumn = document.querySelector('.right-column');
