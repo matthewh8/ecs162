@@ -11,8 +11,6 @@ function getFormattedDate() {
   return today.toLocaleDateString('en-US', options);
 }
 
-document.getElementById('current-date').textContent = getFormattedDate();
-
 async function fetchApiKey(){
     try{
     // still needs to be converted to json even though it was transferred initially as json
@@ -29,7 +27,7 @@ async function fetchArticles(){
     let page = 0;
     const query = 'sacramento';
     let articles = [];
-    while(articles.length < 48){
+    while(articles.length < 42){
       const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&page=${page}&api-key=${apiKey}`;
       console.log(url);
       const response = await fetch(url);
@@ -46,7 +44,7 @@ async function fetchArticles(){
       }
       page++;
     }
-    displayArticles(articles.slice(0, 48));
+    displayArticles(articles.slice(0, 42));
 }
 
 function displayArticles(articles){
@@ -54,7 +52,7 @@ function displayArticles(articles){
   const mainColumn = document.querySelector('.main-column');
   const rightColumn = document.querySelector('.right-column');
   const columns = [leftColumn, mainColumn, rightColumn];
-  for(let i = 0; i < 48; i++){
+  for(let i = 0; i < 42; i++){
     let article = articles[i];
     let articleWrapper = document.createElement('article'); //create article element wrapping headline/abstract
     let headline = document.createElement('h2');
@@ -71,4 +69,11 @@ function displayArticles(articles){
   }
 }
 
-window.onload = fetchArticles();
+window.onload = function() {
+    const currentDateElement = document.getElementById('current-date');
+    if (currentDateElement) {
+      currentDateElement.textContent = getFormattedDate();
+    }
+    
+    fetchArticles();
+  };
