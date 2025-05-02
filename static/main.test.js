@@ -104,6 +104,13 @@ test('footer', () => {
     const footer = (document.querySelector('footer')).textContent.trim();
     expect(footer).toEqual('© 2025 The New York Times');
 });
+test('responsive ui', () => {
+    global.innerWidth = 1400;
+    const rightColumn = document.querySelector(".right-column");
+    const width = rightColumn.getBoundingClientRect().width;
+    console.log(width);
+    expect(width/1400).toBeGreaterThan(.5);
+    });
 });
   
 import * as articleFunction from './main.js';
@@ -131,14 +138,16 @@ describe('API content return test', () => {
         }
         const data = await response.json();
         const returned = data.response.docs[0];
-
         expect(returned).toHaveProperty('headline');
         expect(returned.headline).toHaveProperty('main');
         expect(returned).toHaveProperty('abstract');
         expect(returned).toHaveProperty('multimedia');
         expect(returned.multimedia).toHaveProperty('default');
         expect(returned).toHaveProperty('_id');
+        expect(query).toBe('sacramento'); // test that the query is sacramento news
     });
+
+
 });
 
 
