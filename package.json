@@ -13,9 +13,11 @@
   "devDependencies": {
     "@babel/core": "^7.27.1",
     "@babel/preset-env": "^7.27.1",
+    "@playwright/test": "^1.52.0",
     "babel-jest": "^29.7.0",
     "jest": "^29.7.0",
-    "jest-environment-jsdom": "^29.7.0"
+    "jest-environment-jsdom": "^29.7.0",
+    "window-resizeto": "^0.0.2"
   },
   "jest": {
     "transform": {

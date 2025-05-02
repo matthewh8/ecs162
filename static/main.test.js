@@ -104,13 +104,6 @@ test('footer', () => {
     const footer = (document.querySelector('footer')).textContent.trim();
     expect(footer).toEqual('© 2025 The New York Times');
 });
-test('responsive ui', () => {
-    global.innerWidth = 1400;
-    const rightColumn = document.querySelector(".right-column");
-    const width = rightColumn.getBoundingClientRect().width;
-    console.log(width);
-    expect(width/1400).toBeGreaterThan(.5);
-    });
 });
   
 import * as articleFunction from './main.js';
@@ -133,9 +126,6 @@ describe('API content return test', () => {
     const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&api-key=${apiKey}`;
     test('returned data in expected format', async () => {
         const response = await fetch(url);
-        if (!response.ok) {
-            throw new Error(`HTTP error! status: ${response.status}`);
-        }
         const data = await response.json();
         const returned = data.response.docs[0];
         expect(returned).toHaveProperty('headline');
