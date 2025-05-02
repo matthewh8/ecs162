@@ -3,6 +3,7 @@
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
+  "type": "module",
   "scripts": {
     "jest": "jest"
   },
@@ -24,5 +25,8 @@
       "/node_modules/"
     ],
     "testEnvironment": "jsdom"
+  },
+  "dependencies": {
+    "node-fetch": "^2.7.0"
   }
 }

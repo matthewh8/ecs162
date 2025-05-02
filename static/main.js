@@ -11,7 +11,7 @@ export function getFormattedDate() {
   return today.toLocaleDateString('en-US', options);
 }
 
-export async function fetchApiKey(){
+export async function fetchApiKey(){ // utilizes Flask backend to fetch api key from .env file
     try{
     // still needs to be converted to json even though it was transferred initially as json
     const response = await fetch('/api/key'); 
@@ -22,7 +22,7 @@ export async function fetchApiKey(){
     }
 }
 
-export async function fetchArticles(){
+export async function fetchArticles(){ // queries NYT API for 42 articles, then calls display function
     const apiKey = await fetchApiKey();
     let page = 0;
     const query = 'sacramento';
@@ -45,9 +45,10 @@ export async function fetchArticles(){
       page++;
     }
     displayArticles(articles.slice(0, 42));
+    return articles.slice(0, 42);
 }
 
-export function displayArticles(articles){
+export function displayArticles(articles){ // displays articles by putting them into html
   const leftColumn = document.querySelector('.left-column');
   const mainColumn = document.querySelector('.main-column');
   const rightColumn = document.querySelector('.right-column');
@@ -74,6 +75,8 @@ window.onload = function() {
     if (currentDateElement) {
       currentDateElement.textContent = getFormattedDate();
     }
+    if (require.main === module){
+      fetchArticles();
+    }
     
-    fetchArticles();
   };
