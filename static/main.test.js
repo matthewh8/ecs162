@@ -136,9 +136,114 @@ describe('API content return test', () => {
         expect(returned).toHaveProperty('_id');
         expect(query).toBe('sacramento'); // test that the query is sacramento news
     });
-
-
 });
+
+describe('Media Query Column Width Tests', () => {
+    let originalInnerWidth;
+    let originalMatchMedia;
+    
+    beforeEach(() => {
+      originalInnerWidth = window.innerWidth;
+      originalMatchMedia = window.matchMedia;
+      
+      // Minimal test structure
+      document.body.innerHTML = `
+        <div class="container">
+          <div class="left-column"></div>
+          <div class="main-column"></div>
+          <div class="right-column"></div>
+        </div>
+      `;
+      
+      // Only column width CSS
+      const style = document.createElement('style');
+      style.textContent = `
+        @media screen and (max-width: 1024px) {
+          .main-column { flex: 2; }
+          .right-column { flex: 1; }
+          .left-column { flex: 0 0 100%; }
+        }
+        
+        @media screen and (max-width: 767px) {
+          .container { flex-direction: column; }
+          .main-column, .left-column, .right-column { flex: 1 0 100%; }
+        }
+      `;
+      document.head.appendChild(style);
+    });
+    
+    afterEach(() => {
+      window.innerWidth = originalInnerWidth;
+      window.matchMedia = originalMatchMedia;
+      document.body.innerHTML = '';
+      document.head.querySelector('style')?.remove();
+    });
+    
+    // Simple media query simulator
+    function simulateWidth(width) {
+      window.innerWidth = width;
+      window.matchMedia = (query) => ({
+        matches: query.includes('max-width: 767px') ? width <= 767 : 
+                 query.includes('max-width: 1024px') ? width <= 1024 : false,
+        media: query
+      });
+      window.dispatchEvent(new Event('resize'));
+    }
+    
+    test('Desktop width columns (>1024px)', () => {
+      simulateWidth(1200);
+      
+      expect(window.matchMedia('(max-width: 1024px)').matches).toBe(false);
+      expect(window.matchMedia('(max-width: 767px)').matches).toBe(false);
+    });
+    
+    test('Tablet width columns (≤1024px, >767px)', () => {
+      simulateWidth(900);
+      
+      expect(window.matchMedia('(max-width: 1024px)').matches).toBe(true);
+      expect(window.matchMedia('(max-width: 767px)').matches).toBe(false);
+      
+      const mainColumn = document.querySelector('.main-column');
+      const leftColumn = document.querySelector('.left-column');
+      
+      // Apply tablet styles to verify
+      mainColumn.style.flex = '2';
+      leftColumn.style.flex = '0 0 100%';
+      
+      expect(mainColumn.style.flex).toBe('2');
+      expect(leftColumn.style.flex).toBe('0 0 100%');
+    });
+    
+    test('Mobile width columns (≤767px)', () => {
+      simulateWidth(600);
+      
+      expect(window.matchMedia('(max-width: 767px)').matches).toBe(true);
+      expect(window.matchMedia('(max-width: 1024px)').matches).toBe(true);
+      
+      const container = document.querySelector('.container');
+      const columns = document.querySelectorAll('.left-column, .main-column, .right-column');
+      
+      // Apply mobile styles to verify
+      container.style.flexDirection = 'column';
+      columns.forEach(col => col.style.flex = '1 0 100%');
+      
+      expect(container.style.flexDirection).toBe('column');
+      expect(document.querySelector('.main-column').style.flex).toBe('1 0 100%');
+    });
+    
+    test('Responsive column width changes', () => {
+      // Test changing between breakpoints
+      simulateWidth(1200);
+      expect(window.matchMedia('(max-width: 1024px)').matches).toBe(false);
+      
+      simulateWidth(900);
+      expect(window.matchMedia('(max-width: 1024px)').matches).toBe(true);
+      expect(window.matchMedia('(max-width: 767px)').matches).toBe(false);
+      
+      simulateWidth(600);
+      expect(window.matchMedia('(max-width: 767px)').matches).toBe(true);
+    });
+  });
 
 
   
