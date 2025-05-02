@@ -25,7 +25,7 @@ let page = 0;
 
 export async function fetchArticles(){ // queries NYT API for 6 articles, then calls display function
     const apiKey = await fetchApiKey();
-    const query = 'sacramento';
+    const query = 'sacramento'; // we chose just sacramento because davis didn't have anything
     let articles = [];
     while(articles.length < 6){
       const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&page=${page}&api-key=${apiKey}`;
@@ -36,7 +36,7 @@ export async function fetchArticles(){ // queries NYT API for 6 articles, then c
       for(const doc of returned){
         const keywords = doc.keywords;
         for(const keyword of keywords){
-          if(keyword.name.includes('Location') && keyword.value.includes('Sacramento')){
+          if(keyword.name.includes('Location') && (keyword.value.includes('Sacramento') || (keyword.value.includes('Davis')))){
             articles.push(doc);
             break;
           }
@@ -70,29 +70,31 @@ export function displayArticles(articles){ // displays articles by putting them 
   }
 }
 // enables endless scrolling
-let loading = false;
 
-const observer = new IntersectionObserver(async (entries) => {
-  if (isLoading || !entries[0].isIntersecting) return;
-  loading = true;
-  const newArticles = await fetchArticles();
-  if (newArticles.length > 0) {
-    displayArticles(newArticles);
-  } else {
-    observer.disconnect();
-  }
-  isLoading = false;
-}, { threshold: 1.0 });
+const isJest = typeof process !== 'undefined' && process.env.JEST_WORKER_ID !== undefined;
+if (!isJest){
+  let loading = false;
 
-observer.observe(document.querySelector('.scroll-sentinel'));
+  const observer = new IntersectionObserver(async (entries) => {
+    if (loading || !entries[0].isIntersecting) return;
+    loading = true;
+    const newArticles = await fetchArticles();
+    if (newArticles.length > 0) {
+      displayArticles(newArticles);
+    } else {
+      observer.disconnect();
+    }
+    loading = false;
+  }, { threshold: 1.0 });
+
+  observer.observe(document.querySelector('.scroll-sentinel'));
+}
 
 window.onload = function() {
     const currentDateElement = document.getElementById('current-date');
     if (currentDateElement) {
       currentDateElement.textContent = getFormattedDate();
     }
-    const isJest = typeof process !== 'undefined' && process.env.JEST_WORKER_ID !== undefined;
-
     if (!isJest) {
       fetchArticles();
     }
