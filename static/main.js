@@ -21,13 +21,13 @@ export async function fetchApiKey(){ // utilizes Flask backend to fetch api key 
 
     }
 }
+let page = 0;
 
-export async function fetchArticles(){ // queries NYT API for 42 articles, then calls display function
+export async function fetchArticles(){ // queries NYT API for 6 articles, then calls display function
     const apiKey = await fetchApiKey();
-    let page = 0;
     const query = 'sacramento';
     let articles = [];
-    while(articles.length < 42){
+    while(articles.length < 6){
       const url = `https://api.nytimes.com/svc/search/v2/articlesearch.json?q=${query}&page=${page}&api-key=${apiKey}`;
       console.log(url);
       const response = await fetch(url);
@@ -44,8 +44,8 @@ export async function fetchArticles(){ // queries NYT API for 42 articles, then 
       }
       page++;
     }
-    displayArticles(articles.slice(0, 42));
-    return articles.slice(0, 42);
+    displayArticles(articles.slice(0, 6));
+    return articles.slice(0, 6);
 }
 
 export function displayArticles(articles){ // displays articles by putting them into html
@@ -53,7 +53,7 @@ export function displayArticles(articles){ // displays articles by putting them 
   const mainColumn = document.querySelector('.main-column');
   const rightColumn = document.querySelector('.right-column');
   const columns = [leftColumn, mainColumn, rightColumn];
-  for(let i = 0; i < 42; i++){
+  for(let i = 0; i < 6; i++){
     let article = articles[i];
     let articleWrapper = document.createElement('article'); //create article element wrapping headline/abstract
     let headline = document.createElement('h2');
@@ -69,13 +69,31 @@ export function displayArticles(articles){ // displays articles by putting them 
     columns[i%3].appendChild(articleWrapper); //append wrapper containing everything to parent element column
   }
 }
+// enables endless scrolling
+let loading = false;
+
+const observer = new IntersectionObserver(async (entries) => {
+  if (isLoading || !entries[0].isIntersecting) return;
+  loading = true;
+  const newArticles = await fetchArticles();
+  if (newArticles.length > 0) {
+    displayArticles(newArticles);
+  } else {
+    observer.disconnect();
+  }
+  isLoading = false;
+}, { threshold: 1.0 });
+
+observer.observe(document.querySelector('.scroll-sentinel'));
 
 window.onload = function() {
     const currentDateElement = document.getElementById('current-date');
     if (currentDateElement) {
       currentDateElement.textContent = getFormattedDate();
     }
-    if (require.main === module){
+    const isJest = typeof process !== 'undefined' && process.env.JEST_WORKER_ID !== undefined;
+
+    if (!isJest) {
       fetchArticles();
     }
     
