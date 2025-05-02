@@ -71,11 +71,11 @@ export function displayArticles(articles){ // displays articles by putting them 
 }
 // enables endless scrolling
 
-const isJest = typeof process !== 'undefined' && process.env.JEST_WORKER_ID !== undefined;
+const isJest = typeof process !== 'undefined' && process.env.JEST_WORKER_ID !== undefined; // checks if ran by jest or in app
 if (!isJest){
   let loading = false;
 
-  const observer = new IntersectionObserver(async (entries) => {
+  const observer = new IntersectionObserver(async (entries) => { // checks intersection of scroll sentinel to determine when to load new pages
     if (loading || !entries[0].isIntersecting) return;
     loading = true;
     const newArticles = await fetchArticles();
@@ -90,7 +90,7 @@ if (!isJest){
   observer.observe(document.querySelector('.scroll-sentinel'));
 }
 
-window.onload = function() {
+window.onload = function() { // on window load, fetch the first batch of articles if not in test mode
     const currentDateElement = document.getElementById('current-date');
     if (currentDateElement) {
       currentDateElement.textContent = getFormattedDate();
